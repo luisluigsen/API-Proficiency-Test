@@ -1,0 +1,17 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  User\:
+    resource: '../../src/User/'
+    exclude:
+      - '../../src/User/Domain/Model/'
+      - '../../src/Kernel.php'
+      - '../../src/Tests/'
+
+
+  User\Adapter\Framework\Http\Controller\:
+    resource: '../../src/User/Adapter/Framework/Http/Controller/'
+    tags: ['controller.service_arguments']
+

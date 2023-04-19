@@ -1,0 +1,7 @@
+customer:
+  resource: 'routes/customer.yaml'
+  prefix: 'customer'
+
+user:
+  resource: 'routes/user.yaml'
+  prefix: 'user'

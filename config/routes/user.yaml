@@ -1,0 +1,4 @@
+user_health_check:
+  path: /health-check
+  controller: User\Adapter\Framework\Http\Controller\HealthCheckController
+  methods: [ GET ]
