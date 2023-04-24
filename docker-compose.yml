@@ -1,0 +1,58 @@
+version: '3.5'
+
+services:
+  api-proficiency-test-web:
+    container_name: api-proficiency-test-web
+    build:
+      context: ./docker/nginx
+      args:
+        UID: $U_ID
+    ports:
+      - 1000:80
+    volumes:
+      - ./public:/appdata/www/public
+    depends_on:
+      - api-proficiency-test-be
+    networks:
+      - api-proficiency-test-network
+
+  api-proficiency-test-be:
+    container_name: api-proficiency-test-be
+    build:
+      context: docker/php
+      args:
+        UID: $U_ID
+    volumes:
+      - ./:/appdata/www
+    ###> XDEBUG 3 ###
+    # Use your client IP here
+    # Linux: run "ip a | grep docker0"
+    # Windows (with WSL2) and Mac: host.docker.internal
+    environment:
+      XDEBUG_CLIENT_HOST: 172.17.0.1
+      XDEBUG_CLIENT_PORT: 9003
+      PHP_IDE_CONFIG: serverName=api-proficiency-test
+    networks:
+      - api-proficiency-test-network
+
+  api-proficiency-test-db:
+    container_name: api-proficiency-test-db
+    build:
+      context: ./docker/database
+    ports:
+      - 10000:3306
+    environment:
+      MYSQL_DATABASE: customer_db
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - api-proficiency-test-db-data:/var/lib/mysql
+    networks:
+      - api-proficiency-test-network
+    command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
+
+volumes:
+  api-proficiency-test-db-data:
+
+networks:
+  api-proficiency-test-network:
+    external: true
