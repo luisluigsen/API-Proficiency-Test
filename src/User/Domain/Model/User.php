@@ -2,28 +2,58 @@
 
 namespace User\Domain\Model;
 
-class User
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
+
+/**
+ * @method string getUserIdentifier()
+ */
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    public function __construct(
-        public readonly string $id,
-        public string $name,
-        public string $surname,
-        public string $city,
-        public string $category,
-        public int $age,
-        public string $email,
-        public bool $active,
-        public readonly \DateTime $createdAt,
-        public \DateTime $updatedAt,
+
+    private string $password;
+
+    private function __construct(
+        private string $id,
+        private string $name,
+        private string $surname,
+        private string $city,
+        private string $category,
+        private int $age,
+        private string $email,
+        private bool $active,
+        private readonly \DateTime $createdAt,
+        private \DateTime $updatedAt,
     ) {
     }
+
+    public static function create(
+        string $id,
+        ?string $name,
+        ?string $surname,
+        ?string $city,
+        ?string $category,
+        int $age,
+        ?string $email,
+        ?bool $active,
+        ?\DateTime $createdAt = null,
+        ?\DateTime $updatedAt = null
+    ): self
+    {
+        $createdAt = $createdAt ?: new \DateTime();
+        $updatedAt = $updatedAt ?: new \DateTime();
+
+        return new self($id, $name, $surname, $city, $category, $age, $email, $active, $createdAt, $updatedAt);
+    }
+
+
 
     public function id(): string
     {
         return $this->id;
     }
 
-    public function getName(): string
+    public function name(): ?string
     {
         return $this->name;
     }
@@ -33,7 +63,7 @@ class User
         $this->name = $name;
     }
 
-    public function getSurname(): string
+    public function surname(): ?string
     {
         return $this->surname;
     }
@@ -43,7 +73,17 @@ class User
         $this->surname = $surname;
     }
 
-    public function getCity(): string
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): void
+    {
+        $this->password = $password;
+    }
+
+    public function city(): string
     {
         return $this->city;
     }
@@ -53,7 +93,7 @@ class User
         $this->city = $city;
     }
 
-    public function getCategory(): string
+    public function category(): string
     {
         return $this->category;
     }
@@ -63,7 +103,7 @@ class User
         $this->category = $category;
     }
 
-    public function getAge(): int
+    public function age(): int
     {
         return $this->age;
     }
@@ -73,7 +113,7 @@ class User
         $this->age = $age;
     }
 
-    public function getEmail(): string
+    public function email(): string
     {
         return $this->email;
     }
@@ -83,7 +123,7 @@ class User
         $this->email = $email;
     }
 
-    public function isActive(): bool
+    public function active(): bool
     {
         return $this->active;
     }
@@ -93,12 +133,12 @@ class User
         $this->active = $active;
     }
 
-    public function getCreatedAt(): \DateTime
+    public function createdAt(): \DateTime
     {
         return $this->createdAt;
     }
 
-    public function getUpdatedAt(): \DateTime
+    public function updatedAt(): \DateTime
     {
         return $this->updatedAt;
     }
@@ -106,5 +146,28 @@ class User
     public function markAsUpdated(): void
     {
         $this->updatedAt = new \DateTime();
+    }
+
+    public function getRoles(): array
+    {
+        return ['ROLE_USER'];
+    }
+
+
+    public function getSalt()
+    {
+    }
+
+    public function eraseCredentials()
+    {
+    }
+
+    public function getUsername(): string
+    {
+        return $this->email;
+    }
+
+    public function __call(string $name, array $arguments)
+    {
     }
 }

@@ -3,13 +3,12 @@
     <entity name="Customer\Domain\Model\Customer" table="customer">
         <indexes>
             <index name="IDX_customer_name" columns="name"/>
-            <index name="IDX_user_id" columns="user_id"/>
         </indexes>
         <id name="id" type="string" column="id"/>
 
         <field name="name" length="50" column="name"/>
-        <field name="email" length="100" column="email" nullable="true" unique="true"/>
-        <field name="phone" length="20" column="phone"/>
-        <field name="userId" column="user_id" length="36"/>
+        <field name="email" length="100" column="email" unique="true"/>
+        <field name="password" length="255"/>
+        <field name="roles" type="json" column="roles"/>
     </entity>
 </doctrine-mapping>

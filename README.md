@@ -1,35 +1,29 @@
-# API Proficiency Test
+# Proyecto Symfony: Módulos independientes de Customer y User
 
-This is a basic skeleton with a monolithic architecture based on DDD, configured in Symfony 5.4. It consists of two modules: Customer and User, each with their defined entities and folder structure for working with a decoupled DDD architectural development. The project also includes a Test folder with a basic structure to start working on the application. The package provides, among other things, four databases, pre-configured migration files, Docker and docker-compose files predefined, and a Makefile configured to run our containers and some appropriate services to run our app.
+Este proyecto es una aplicación Symfony basada en la arquitectura hexagonal de 3 capas ('Adapter', 'Application', y 'Domain') y una arquitectura monolítica separada en dos módulos totalmente independientes para las entidades Customer y User. Los módulos cuentan con endpoints securizados y autenticación basada en roles para garantizar la seguridad y privacidad de los datos.
 
-## 📦 Installation and Configuration
+## Arquitectura
 
-- 🎼 Composer: to install dependencies in your Symfony project
-- 🔍 A basic XDEBUG 3 configuration (you can add or remove configuration under `docker/xdebug.ini`)
+- Arquitectura hexagonal de 3 capas:
+  - Adapter: Capa de adaptadores e interfaces con sistemas externos
+  - Application: Capa de lógica de aplicación y casos de uso
+  - Domain: Capa de dominio y reglas de negocio
+- Arquitectura monolítica separada en dos módulos independientes: Customer y User
 
-### 🔧 Installation
+## Funcionalidades
 
-1. 🏗️ Run `make build` to build the project and install dependencies.
-2. 🌀 Run `make start` to spin up the application container.
-3. 💻 Run `make ssh-be` to access the application container's bash.
-   (check other targets in `Makefile`)
+- Creación de las entidades Customer y User separada en dos módulos totalmente independientes
+- Endpoints para el módulo de Customer:
+  - `POST /api/customers/`: Crear un nuevo customer
+  - `DELETE /api/customers/{id}`: Eliminar un customer existente
+  - `GET /api/customers/{id}`: Obtener información de un customer
+  - `PATCH /api/customers/{id}`: Actualizar información de un customer
+- Creación de tres cliente 'customer' con todos los permisos para trabajar con la base de datos
 
-Now you can run Symfony commands to create a new project and so on. (See [Symfony's download page](https://symfony.com/download) for more info)
-
-### 🗃️ Running Migrations
-
-Run `make migrations` to execute the database migrations.
-
-### 🧪 Running Tests
-
-Run `make tests` to execute the test suite.
-
-### 🎨 Code Style
-
-Run `make code-style` to execute PHP-CS-Fixer and ensure consistent code style throughout the project.
-
-⚠️ **Note**: If you get a GIT error during the creation of a new project, set your GITHUB username and email with:
-
-```bash
-git config --global user.name "[your name]"
-git config --global user.email "[your email]"
+- Endpoints para el módulo de User:
+  - `POST /user/api/create`: Crear un nuevo usuario
+  - `PATCH /user/api/{id}`: Actualizar información de un usuario
+  - `GET /user/api/{id}`: Obtener información de un usuario
+  - `DELETE /user/api/{id}`: Eliminar un usuario existente
+  - `POST /user/api/search`: Realizar búsquedas avanzadas de usuarios
+- Generación de datos de prueba mediante DataFixtures

@@ -10,6 +10,7 @@
 
         <field name="name" length="100" column="name"/>
         <field name="surname" length="100" column="surname"/>
+        <field name="password" length="255"/>
         <field name="city" length="100" column="city"/>
         <field name="category" column="category" column-definition="ENUM('X', 'Y', 'Z')"/>
         <field name="age" type="smallint" column="age"/>

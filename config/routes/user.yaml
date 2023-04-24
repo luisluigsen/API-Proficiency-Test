@@ -2,3 +2,28 @@ user_health_check:
   path: /health-check
   controller: User\Adapter\Framework\Http\Controller\HealthCheckController
   methods: [ GET ]
+
+user_create:
+  path: /api/create
+  controller: User\Adapter\Framework\Http\Controller\User\CreateUserController
+  methods: [ POST ]
+
+user_update:
+  path: /api/{id}
+  controller: User\Adapter\Framework\Http\Controller\User\UpdateUserController
+  methods: [ PATCH ]
+
+user_get:
+  path: /api/{id}
+  controller: User\Adapter\Framework\Http\Controller\User\GetUserController
+  methods: [ GET ]
+
+user_delete:
+  path: /api/{id}
+  controller: User\Adapter\Framework\Http\Controller\User\DeleteUserController
+  methods: [ DELETE ]
+
+search_users:
+  path: /api/search
+  controller: User\Adapter\Framework\Http\Controller\User\AdvancedSearchController
+  methods: ['POST']

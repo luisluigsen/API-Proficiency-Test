@@ -14,3 +14,9 @@ services:
   Customer\Adapter\Framework\Http\Controller\:
     resource: '../../src/Customer/Adapter/Framework/Http/Controller/'
     tags: [ 'controller.service_arguments' ]
+
+  App\DataFixtures\:
+    arguments:
+      - '@doctrine.orm.customer_em_entity_manager'
+    resource: '../../src/DataFixtures'
+    tags: [ 'doctrine.fixture.orm' ]
